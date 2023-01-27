@@ -1,14 +1,24 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {fetchExamples} from "../actions/async/examplesAsyncActions";
 
 const History = () => {
+    let [quantity, setQuantity] = useState("1");
+    const dispatch = useDispatch();
     const historyItems = useSelector(state => state.history.items);
+
+    function processExamples(quantity) {
+        dispatch(fetchExamples(quantity));
+    }
 
     return (
         <div className="history">
-            <button className="getTaskButton">Получить и решить примеры</button>
+            <button onClick={() => processExamples(quantity)} className="getTaskButton">Получить и решить примеры</button>
             <div className="params">
-                <input id = "quantity-input"
+                <input value={quantity}
+                       onChange={event => setQuantity(event.target.value)}
+                       id = "quantity-input"
                        className="quantity-input"
                        type="number"/>
             </div>
@@ -17,7 +27,7 @@ const History = () => {
                 {historyItems.length > 0 ?
                     <div>
                         {historyItems.map(item =>
-                            <div>{item.expression}</div>
+                            <div key={item.id}>{item.expression}</div>
                         )}
                     </div>
                     :

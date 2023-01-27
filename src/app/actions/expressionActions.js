@@ -1,26 +1,11 @@
-const defaultState = {
-    expression: "",
-    isFullEquation: false
-}
-
-export const expressionReducer = (state=defaultState, action) => {
-
-    switch(action.type) {
-        case "ADD_SYMBOL":
-            let symbol = action.symbol;
-            return processGivenSymbol(state, symbol);
-
-        default:
-            return state;
-    }
-}
-
 let operatorBetweenDigitsRe = /-?\d+\D{1}\d+/
 let fullEquationRe = /-?\d+\D{1}\d+=-?\d+/
 let operatorRe = /\D/
 
-function processGivenSymbol(state, symbol) {
-    let expression = state.expression;
+export const ADD_SYMBOL = "ADD_SYMBOL";
+export const SOLVE_EXPRESSIONS = "SOLVE_EXPRESSIONS";
+
+export function processGivenSymbol(state, expression, symbol) {
 
     if (symbol === 'AC')
         return {...state, expression: "", isFullEquation: false}
@@ -38,7 +23,6 @@ function processGivenSymbol(state, symbol) {
     else if (initializeCalculation(symbol, expression)) {
         let result = calculateResult(expression);
         return {...state, expression: result, isFullEquation: true}
-        // addToHistory(result);
     }
     else
         return {...state, expression: expression + symbol, isFullEquation: false}
@@ -87,7 +71,7 @@ function initializeCalculation(symbol, stateParam) {
     return false;
 }
 
-function calculateResult(stateParam) {
+export function calculateResult(stateParam) {
     const result = stateParam
         .split(/(\D)/)
         .map(value => (value.match(/\d/) ? parseInt(value, 0) : value))
