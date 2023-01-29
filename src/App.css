@@ -15,13 +15,7 @@ button {
 }
 
 .getTaskButton {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border-radius: 6px;
-  width: 200px;
-  background-color: black;
-  color: white;
-  cursor: pointer;
+  width: 255px;
 }
 
 .quantity-input {

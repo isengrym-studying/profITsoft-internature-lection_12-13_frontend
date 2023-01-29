@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getAddSymbolAction} from "../reducers/expressionReducer";
 import {store} from "../index";
 import {getAddHistoryItemAction} from "../actions/historyActions";
+import MUIButton from '@mui/material/Button';
 
 const Button = (props) => {
     const dispatch = useDispatch();
@@ -17,7 +18,14 @@ const Button = (props) => {
     }
 
     return (
-        <button onClick={() => handleClick(props.value)} value={props.value}>{props.value}</button>
+        <MUIButton
+            sx={{m:0.1}}
+            variant="outlined"
+            onClick={() => handleClick(props.value)}
+            value={props.value}>
+            {props.value}
+        </MUIButton>
+        // <button onClick={() => handleClick(props.value)} value={props.value}>{props.value}</button>
     );
 };
 
